@@ -65,10 +65,13 @@ public class MainActivity extends AppCompatActivity {
                     List<Category> probability = outputs.getProbabilityAsCategoryList();
                     probability.sort(Comparator.comparing(Category::getScore, Comparator.reverseOrder()));
                     String labels = String.valueOf(probability.get(0));
+                    // Splitting the results
+                    // <Category "None" (displayName=" (score=0.87109375)>
                     String name = labels.substring(labels.indexOf('"'), labels.indexOf("("));
                     String score = labels.substring(labels.lastIndexOf("="), labels.lastIndexOf(")")).substring(1);
+                    int percent = Math.round(Float.parseFloat(score)*100);
                     System.out.println(probability.get(0));
-                    tv.setText(String.valueOf("Plant "+name+"\n"+"Confidence "+score));
+                    tv.setText(String.valueOf("Plant= "+name+"\n"+"Confidence= "+percent+"%"));
                     // Releases model resources if no longer used.
                     model.close();
                 } catch (IOException e) {
